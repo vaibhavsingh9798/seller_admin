@@ -26,7 +26,7 @@ function print(item){
    li.appendChild(document.createTextNode(`${item.sprice} - ${item.ptype} - ${item.pname}`))
    let delBtn = document.createElement('button')
    delBtn.appendChild(document.createTextNode('Delete'))
-   delBtn.setAttribute('id',item._id)
+   delBtn.setAttribute('id',item.id)
    delBtn.setAttribute('class','del float-right m-1')
    li.appendChild(delBtn)
    if(item.ptype == 'Electronic'){
@@ -45,7 +45,9 @@ let getProducts = async ()=>{
     ul2.innerHTML=''
     ul3.innerHTML=''
     try{
-    let response = await axios.get(`https://crudcrud.com/api/6a570b7ebf4345b9a6960f997dcedd9e/products`)
+    //let response = await axios.get(`https://crudcrud.com/api/6a570b7ebf4345b9a6960f997dcedd9e/products`)
+    let response = await axios.get(`http://localhost:3001/products/all`)
+    console.log('resp',response)
      response.data.map((item) => print(item) ) 
     }catch(e){
       console.log('err',e)
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded',getProducts)
 let postProduct = async (product)=>{
     console.log('post prod',product)
     try{
-    let response = await axios.post(`https://crudcrud.com/api/6a570b7ebf4345b9a6960f997dcedd9e/products`,product)
+    let response = await axios.post(`http://localhost:3001/products/product`,product)
     getProducts()
     }catch(e){
       console.log('err',e)
@@ -67,7 +69,7 @@ let postProduct = async (product)=>{
 let deleteProduct = async (id)=>{
 
     try{
-    let response = await axios.delete(`https://crudcrud.com/api/6a570b7ebf4345b9a6960f997dcedd9e/products/${id}`)
+    let response = await axios.delete(`http://localhost:3001/products/product/${id}`)
     getProducts()
     }catch(e){
       console.log('err',e)
